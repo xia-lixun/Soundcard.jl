@@ -94,7 +94,7 @@ apply mixing matrix 'mix' to input signal matrix 'x' for logical signal routing
 """
 function mixer(x::Matrix{T}, mix::Matrix{T}) where T <: AbstractFloat   # -> Matrix{T}
     y = x * mix
-    maximum(abs.(y)) >= one(T) && error("soundcard mixer: sample clipping!")
+    maximum(abs.(y)) >= one(T) && (@error "soundcard mixer: sample clipping!")
     return y
 end
 
