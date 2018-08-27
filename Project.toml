@@ -1,0 +1,8 @@
+name = "Soundcard"
+uuid = "769233a0-a99e-11e8-0f56-b3b741a1b319"
+authors = ["LiXia "]
+version = "0.1.0"
+
+[deps]
+SharedArrays = "1a1011a3-84de-559e-8e89-a11a2f7dc383"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
