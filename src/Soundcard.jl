@@ -92,8 +92,9 @@ end
 
 apply mixing matrix 'mix' to input signal matrix 'x' for logical signal routing
 """
-function mixer(x::Matrix{T}, mix::Matrix{T}) where T <: AbstractFloat   # -> Matrix{T}
-    y = x * mix
+function mixer(x::Matrix{T}, mix::Matrix) where T <: AbstractFloat   # -> Matrix{T}
+    mm = convert(Matrix{T}, mix)
+    y = x * mm
     maximum(abs.(y)) >= one(T) && (@error "soundcard mixer: sample clipping!")
     return y
 end
@@ -108,20 +109,20 @@ end
 
 function playrecord(playing::Matrix, mixspk::Matrix, mixmic::Matrix, fs)::Matrix{Float32}
     playf32 = convert(Matrix{Float32}, playing)
-    routespkf32 = convert(Matrix{Float32}, mixspk)
-    routemicf32 = convert(Matrix{Float32}, mixmic)
-    recording = mixer(playrecord(mixer(playf32,routespkf32), size(mixmic,1), convert(Int64,fs)), routemicf32)
+    # routespkf32 = convert(Matrix{Float32}, mixspk)
+    # routemicf32 = convert(Matrix{Float32}, mixmic)
+    recording = mixer(playrecord(mixer(playf32,mixspk), size(mixmic,1), convert(Int64,fs)), mixmic)
 end
 
 function play(playing::Matrix, mixspk::Matrix, fs)
     playf32 = convert(Matrix{Float32}, playing)
-    routespkf32 = convert(Matrix{Float32}, mixspk)
-    play(mixer(playf32, routespkf32), Int64(fs))
+    # routespkf32 = convert(Matrix{Float32}, mixspk)
+    play(mixer(playf32, mixspk), Int64(fs))
 end
 
 function record(samples::Integer, mixmic::Matrix, fs)::Matrix{Float32}
-    routemicf32 = convert(Matrix{Float32}, mixmic)
-    recording = mixer(record((convert(Int64,samples),size(mixmic,1)), Int64(fs)), routemicf32)
+    # routemicf32 = convert(Matrix{Float32}, mixmic)
+    recording = mixer(record((convert(Int64,samples),size(mixmic,1)), Int64(fs)), mixmic)
 end
 
 
@@ -130,11 +131,11 @@ end
                                     ##  API for ultralow latency
                                     ## --------------------------
 
-#dat = SoundcardAPI.mixer(Float32.(playing), Float32.(mixspk))
-#pcm = SharedArray{Float32,1}(SoundcardAPI.to_interleave(dat))
+#dat = Soundcard.mixer(Float32.(playing), mixspk)
+#pcm = SharedArray{Float32,1}(Soundcard.to_interleave(dat))
 play(size_dat::Tuple{Int64,Int64}, pcm::SharedArray{Float32,1}, fs) = 
     ccall((:play, "C:\\Drivers\\Julia\\soundcard_api"), Int32, (Ptr{Float32}, Int64, Int64, Int64), pcm, size_dat[2], size_dat[1], fs)  # remotecall
-# async tasks
+# async tasks...
 # fetch(done)
 
 
