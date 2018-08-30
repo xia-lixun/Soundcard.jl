@@ -7,16 +7,14 @@ using SharedArrays
 
 
 modulepath(name) = realpath(joinpath(dirname(pathof(name)),".."))
-
-
 """
-    init(module)
+    init()
 
 install binary dependencies to "C:\\Drivers\\Julia\\"
 """
-function init(name)
+function __init__()
     mkpath("C:\\Drivers\\Julia\\")
-    modpath = modulepath(name)
+    modpath = modulepath(Soundcard)
     cp(joinpath(modpath, "deps/usr/lib/portaudio_x64.dll"), "C:\\Drivers\\Julia\\portaudio_x64.dll", force=true)
     cp(joinpath(modpath, "deps/usr/lib/soundcard_api.dll"), "C:\\Drivers\\Julia\\soundcard_api.dll", force=true)
 end
