@@ -87,12 +87,15 @@ end
 """
     mixer(x, mix)
 
-apply mixing matrix 'mix' to input signal matrix 'x' for logical signal routing
+apply mixing matrix 'mix' to input signal matrix 'x' for logical signal routing,
+mixing matrix will be converted to the same type as the input matrix, note that
+this function is the last gate to the physical world of soundcard so clipping
+is treated as error.
 """
 function mixer(x::AbstractMatrix{T}, mix::AbstractMatrix) where T <: AbstractFloat
     mm = convert(Matrix{T}, mix)
     y = x * mm
-    maximum(abs.(y)) >= one(T) && (@error "soundcard mixer: sample clipping!")
+    maximum(abs.(y)) >= one(T) && error("soundcard.mixer: sample clipping")
     return y
 end
 
@@ -100,9 +103,9 @@ end
 
 
 
-                                    ## --------------------------
-                                    ##    API for ease of use
-                                    ## --------------------------
+                                    # --------------------------
+                                    #    API for ease of use
+                                    # --------------------------
 
 function playrecord(playing::Matrix, ms::Matrix, mm::Matrix, fs)::Matrix{Float32}
     out = convert(Matrix{Float32}, playing)
@@ -120,9 +123,9 @@ end
 
 
 
-                                    ## --------------------------
-                                    ##  API for ultralow latency
-                                    ## --------------------------
+                                    # --------------------------
+                                    #  API for ultralow latency
+                                    # --------------------------
 # x = Soundcard.mixer(convert(Matrix{Float32},out), ms)
 # y = SharedArray{Float32,1}(Soundcard.interleave(x))
 play(size_x::Tuple{Int64,Int64}, y::SharedArray{Float32,1}, fs) = 
