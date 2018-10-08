@@ -9,9 +9,9 @@ uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
 [[BinaryProvider]]
 deps = ["Libdl", "Pkg", "SHA", "Test"]
-git-tree-sha1 = "48c147e63431adbcee69bc40b04c3f0fec0a4982"
+git-tree-sha1 = "38be61810f280c3c478f5c38aaf387f8f9199275"
 uuid = "b99e7846-7c00-51b0-8f62-c81ae34c0232"
-version = "0.5.0"
+version = "0.5.1"
 
 [[Compat]]
 deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", "LibGit2", "Libdl", "LinearAlgebra", "Markdown", "Mmap", "Pkg", "Printf", "REPL", "Random", "Serialization", "SharedArrays", "Sockets", "SparseArrays", "Statistics", "Test", "UUIDs", "Unicode"]
@@ -57,8 +57,8 @@ version = "0.19.0"
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 
 [[Libaudio]]
-deps = ["FFTW", "LinearAlgebra", "Polynomials", "Random", "SHA", "Statistics", "Test"]
-git-tree-sha1 = "c7fd546a4d8666d60a7faacd826dc8e016e85e55"
+deps = ["Dates", "FFTW", "LinearAlgebra", "Polynomials", "Random", "SHA", "Statistics", "Test"]
+git-tree-sha1 = "229f69388046fd651e38bbc15ae8737a7814ea93"
 repo-rev = "master"
 repo-url = "https://github.com/xia-lixun/Libaudio.jl"
 uuid = "492fcaa0-a483-11e8-0aa5-8960d485180b"

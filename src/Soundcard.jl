@@ -1,8 +1,11 @@
 module Soundcard
 using SharedArrays
+using Libaudio
+
 # int record(float * pcm_record, int64_t record_channels, int64_t record_frames, int64_t samplerate);
 # int play(const float * pcm_play, int64_t play_channels, int64_t play_frames, int64_t samplerate);
 # int playrecord(const float * pcm_play, int64_t play_channels, float * pcm_record, int64_t record_channels, int64_t common_frames, int64_t samplerate);
+
 
 
 modulepath(name) = realpath(joinpath(dirname(pathof(name)),".."))
@@ -89,14 +92,13 @@ end
 
 apply mixing matrix 'mix' to input signal matrix 'x' for logical signal routing,
 mixing matrix will be converted to the same type as the input matrix, note that
-this function is the last gate to the physical world of soundcard so clipping
-is treated as error.
+this function is the last gate to the physical world of soundcard so use clamp
 """
 function mixer(x::AbstractMatrix{T}, mix::AbstractMatrix) where T <: AbstractFloat
     mm = convert(Matrix{T}, mix)
     y = x * mm
-    maximum(abs.(y)) >= one(T) && error("soundcard.mixer: sample clipping")
-    return y
+    maximum(abs.(y)) >= one(T) && Libaudio.printl("C:/Drivers/Julia/run.log", :light_red, Libaudio.nows() * " | Soundcard.mixer: sample amplitude clipping")
+    return clamp.(y, -one(T), one(T))
 end
 
 

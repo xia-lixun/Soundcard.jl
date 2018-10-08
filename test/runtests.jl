@@ -85,7 +85,7 @@ let s = 10^(-10/20) * sinpi.(2*1000*(0:48000-1)/48000), ms = zeros(1,2), mm = ze
     ms[1,2] = 1
     mm[2,1] = 1
     y = Soundcard.playrecord(x, ms, mm, 48000)
-    Libaudio.wavwrite_("loop.wav", y, 48000, 32)
+    Libaudio.wavwrite("loop.wav", y, 48000, 32)
     # m = Libaudio.zerocrossingrate(s)
     # n = Libaudio.zerocrossingrate(y[:,1])
     # @info length(m[m.==1.0])
