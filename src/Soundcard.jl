@@ -9,17 +9,27 @@ using Libaudio
 
 
 modulepath(name) = realpath(joinpath(dirname(pathof(name)),".."))
+folder() = "C:/DRIVERS/Julia/"
+
+
 """
     init()
 
 install binary dependencies to "C:\\Drivers\\Julia\\"
 """
 function __init__()
-    mkpath("C:\\Drivers\\Julia\\")
-    modpath = modulepath(Soundcard)
-    cp(joinpath(modpath, "deps/usr/lib/portaudio_x64.dll"), "C:\\Drivers\\Julia\\portaudio_x64.dll", force=true)
-    cp(joinpath(modpath, "deps/usr/lib/soundcard_api.dll"), "C:\\Drivers\\Julia\\soundcard_api.dll", force=true)
+    root = folder()
+    isdir(root) || mkpath(root)
+    mp = modulepath(Soundcard)
+
+    t1 = joinpath(root, "portaudio_x64.dll")
+    t2 = joinpath(root, "soundcard_api.dll")
+
+    isfile(t1) || cp(joinpath(mp, "deps/usr/lib/portaudio_x64.dll"), t1, force=true)
+    isfile(t2) || cp(joinpath(mp, "deps/usr/lib/soundcard_api.dll"), t2, force=true)
 end
+
+
 
 
 """
