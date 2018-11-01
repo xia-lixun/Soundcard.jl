@@ -107,7 +107,7 @@ this function is the last gate to the physical world of soundcard so use clamp
 function mixer(x::AbstractMatrix{T}, mix::AbstractMatrix) where T <: AbstractFloat
     mm = convert(Matrix{T}, mix)
     y = x * mm
-    maximum(abs.(y)) >= one(T) && Libaudio.printl("C:/Drivers/Julia/run.log", :light_red, Libaudio.nows() * " | Soundcard.mixer: sample amplitude clipping")
+    maximum(abs.(y)) >= one(T) && Libaudio.printl(joinpath(Libaudio.folder(), Libaudio.logfile()), :light_red, Libaudio.nows() * " | Soundcard.mixer: sample amplitude clipping")
     return clamp.(y, -one(T), one(T))
 end
 
