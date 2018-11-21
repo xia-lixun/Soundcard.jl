@@ -142,7 +142,7 @@ uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 
 [[Libaudio]]
 deps = ["Dates", "FFTW", "HDF5", "LinearAlgebra", "Polynomials", "PyCall", "PyPlot", "Random", "SHA", "Statistics", "Test"]
-git-tree-sha1 = "8a775441b1d31ca57864fd2361fdd734aa04d5a1"
+git-tree-sha1 = "6da3014eee9ca6f5a64d342785f0cee88c3424dd"
 repo-rev = "master"
 repo-url = "https://github.com/xia-lixun/Libaudio.jl"
 uuid = "492fcaa0-a483-11e8-0aa5-8960d485180b"
